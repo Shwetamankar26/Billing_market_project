@@ -5,8 +5,10 @@ function LogIn() {
   return (
     <>
         <div className='container'>
-          <center><h1 style={{color:'blue'}}><i>LOGIN FORM..</i></h1></center>
+          <center><h1 style={{color:'blue'}}><i>LOGIN FORM..<br></br></i></h1></center>
+          <br></br>
           <form>
+            <br/>
             <label htmlFor='un'>USERNAME</label>
             <input type='text' id='un' className='form-control'/>
             <br/>

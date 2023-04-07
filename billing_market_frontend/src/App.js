@@ -6,20 +6,27 @@ import Quaterly_sales from './Components/Sales_components/Quaterly_sales';
 import Weeklysales from './Components/Sales_components/Weeklysales';
 import Sidebar from "./Components/Sidebar";
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
+import LogIn from './Components/LogIn';
+import AddExpenses from './Components/Auth_components/AddExpenses';
+import AddUser from './Components/Auth_components/AddUser';
 
 function App() {
   return (
     
     <>
+
     <BrowserRouter>
-    <Sidebar>
+    {/* <Sidebar> */}
     <Routes>
-      <Route path='/Daily_Sales' element={<Daily_sales/>}/>
+      <Route path='/addemployee' element={<AddUser/>}></Route>
+      <Route path='/login' element={<LogIn/>}></Route>
+      <Route path='/addexpenses' element={<AddExpenses/>}></Route>
+      {/* <Route path='/Daily_Sales' element={<Daily_sales/>}/>
       <Route path='/Monthly_Sales' element={<Monthly_sales/>}/>
       <Route path='/Quaterly_Sales' element={<Quaterly_sales/>}/>
-      <Route path='/Weekly_Sales' element={<Weeklysales/>}/>
+      <Route path='/Weekly_Sales' element={<Weeklysales/>}/> */}
     </Routes>
-    </Sidebar>
+    {/* </Sidebar> */}
     </BrowserRouter>
   
     </>
