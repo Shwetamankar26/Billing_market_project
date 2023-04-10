@@ -26,3 +26,4 @@ you have to provide business solution for the wart/shop to effectively generate 
  ![db diagram](/billing_market_frontend/public/dbdiagram.png)
 
 ### superuser created: username-admin password-admin
+hello ..
