@@ -42,9 +42,11 @@ INSTALLED_APPS = [
     'reports_app',
     'sales_app',
     'stocks_app',
-    'faker_app',
     'rest_framework',
     'phonenumber_field',
+    'corsheaders',
+    'rest_framework_simplejwt',
+    
 ]
 
 MIDDLEWARE = [
@@ -55,7 +57,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'billing_project.urls'
 
@@ -133,3 +143,23 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "auth_app.User"
+
+##Email Settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'latakokare1996@gmail.com'
+EMAIL_HOST_PASSWORD = 'bmvlubwxgoqxqxvz'
+
+
+##customize 
+from datetime import timedelta
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME':timedelta(days=15),
+    'REFRESH_TOKEN_LIFETIME':timedelta(weeks=5),
+    'AUTH_HEADER_TYPES':('Bearer','Jwt'),
+    'ROTATE_REFRESH_TOKENS': True,
+     'BLACKLIST_AFTER_ROTATION': True
+}

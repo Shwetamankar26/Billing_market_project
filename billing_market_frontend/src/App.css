@@ -7,11 +7,7 @@ body{
   height: 100vh;
   background: var(--body-color);
 }
-.container{
-  display: flex;
-  margin-right: 50px;
 
-}
 main{
   width: 100%;
   padding: 20px;

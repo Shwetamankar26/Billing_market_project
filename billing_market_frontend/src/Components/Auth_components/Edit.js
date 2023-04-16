@@ -1,34 +1,56 @@
-import React from 'react'
-import {useForm} from 'react-hook-form'
-import axios from 'axios'
-import {useNavigate} from 'react-router-dom'
+import axios from 'axios';
+import React, { useEffect } from 'react'
+import { useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom'
 
-function AddUser() {
-    const {register,handleSubmit} = useForm();
+function Edit() {
+    const {userId} = useParams();
+    const {register,handleSubmit,setValue} = useForm();
     const navigate = useNavigate();
-    const saveData = data=>{
-        axios.post('http://localhost:8000/api/user/',data,{headers: 
+    
+    async function FetchUser(){
+        const result = await axios.get(`http://127.0.0.1:8000/api/user/${userId}/`,{headers: 
         {'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('access_token')}`}},
          {withCredentials:true});
-        navigate('/auth_component/show')
+        
+        setValue('username',result.data.username);
+        setValue('first_name',result.data.first_name);
+        setValue('last_name',result.data.last_name);
+        setValue('email',result.data.email);
+        setValue('address',result.data.address);
+        setValue('contact',result.data.contact);
+        setValue('city',result.data.city);
+        setValue('pincode',result.data.pincode);
+        setValue('role',result.data.role);
     }
+    
+    function saveData(data){
+      axios.put(`http://127.0.0.1:8000/api/user/${userId}/`,data,{headers: 
+      {'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('access_token')}`}},
+       {withCredentials:true});
+      navigate('/auth_component/show');
+  
+  }
+    
+    useEffect(()=>{
+        FetchUser();
+    },[]);
   return (
     <>
-    <div className='container'>
-        <h2 style={{color:'green'}}>User Form</h2>
+      <div className='container'>
+        <h2 style={{color:'green'}}>User Edit Form</h2>
         <form onSubmit={handleSubmit(saveData)}>
 
-            <label htmlFor='unm' >Username</label>
+            <label htmlFor='unm'>Username</label>
             <input type='text' id='unm' className='form-control' {...register('username')}/><br/><br/>
             
-            <label htmlFor='pwd' >Password</label>
-            <input type='password' id='pwd' className='form-control' {...register('password')}/><br/><br/>
 
             <label htmlFor='fnm' >First Name</label>
             <input type='text' id='fnm' className='form-control' {...register('first_name')}/><br/><br/>
 
-            <label htmlFor='lnm' >Last Name</label>
+            <label htmlFor='lnm'>Last Name</label>
             <input type='text' id='lnm' className='form-control' {...register('last_name')}/><br/><br/>
 
             <label htmlFor='mail' >Email Id</label>
@@ -56,8 +78,7 @@ function AddUser() {
                 <option value='staff'>Staff</option>
             </select ><br/><br/>
 
-            <input type='submit' className='btn btn-outline-success btn-lg col-3 me-3'/>
-
+            <input type='submit' value='Edit' className='btn btn-success btn-lg col-3'/>
             
         </form>
     </div>
@@ -65,4 +86,4 @@ function AddUser() {
   )
 }
 
-export default AddUser
+export default Edit;

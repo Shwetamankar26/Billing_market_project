@@ -10,7 +10,7 @@ class User(AbstractUser):
         ('staff','staff'),
         ('manager','manager')
     )
-
+    name = models.CharField(max_length=20,blank=True)
     address = models.TextField(blank=True)
     contact = PhoneNumberField(region='IN',blank=True)
     city = models.CharField(max_length=30,blank=True)

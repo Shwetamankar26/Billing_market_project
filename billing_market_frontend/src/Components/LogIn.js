@@ -1,26 +1,133 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
+import axios from 'axios'
+
+import "./Auth_components/styles.css"
+import { useNavigate } from "react-router-dom";
 
 function LogIn() {
+  const [user,setUser] = useState([]);
+  const navigate=useNavigate()
+
+  async function FetchUSer (){
+    const database = await axios.get('http://localhost:8000/api/user/',{headers: 
+    {'Content-Type': 'application/json',
+  'Authorization': `Bearer ${localStorage.getItem('access_token')}`}},
+     {withCredentials:true});
+    setUser(database.data)
+    
+  }
+  useEffect(()=>{
+    FetchUSer();
+  },[])
+  // React States
+  const [errorMessages, setErrorMessages] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // User Login info
+
+
+  const errors = {
+    uname: "invalid username",
+    pass: "invalid password"
+  };
+
+  const handleSubmit = (event) => {
+    //Prevent page reload
+    event.preventDefault();
+
+    var { uname, pass } = document.forms[0];
+
+    // Find user login info
+    const userData = user.find((user) => user.username === uname.value);
+
+    // Compare user info
+    if (userData) {
+      if (userData.password !== pass.value) {
+        // Invalid password
+        setErrorMessages({ name: "pass", message: errors.pass });
+      } else {
+        setIsSubmitted(true);
+      }
+    } else {
+      // Username not found
+      setErrorMessages({ name: "uname", message: errors.uname });
+    }
+  
+
+  if (userData) {
+    if (userData.role !== 'admin') {
+      // Invalid password
+      setErrorMessages({ name: "pass", message: errors.pass });
+    } 
+    else {
+      navigate('/admin');
+    }
+    if (userData.role !== 'manager') {
+        // Invalid password
+        setErrorMessages({ name: "pass", message: errors.pass });
+      } 
+      else {
+        navigate('/manager');
+      }
+
+      if (userData.role !== 'cashier') {
+        // Invalid password
+        setErrorMessages({ name: "pass", message: errors.pass });
+      } 
+      else {
+        navigate('/cashier');
+      }
+
+      if (userData.role !== 'staff') {
+        // Invalid password
+        setErrorMessages({ name: "pass", message: errors.pass });
+      } 
+      else {
+        navigate('/staff');
+      }
+  } else {
+    // Username not found
+    setErrorMessages({ name: "uname", message: errors.uname });
+  }
+};
+
+  // Generate JSX code for error message
+  const renderErrorMessage = (name) =>
+    name === errorMessages.name && (
+      <div className="error">{errorMessages.message}</div>
+    );
+
+  // JSX code for login form
+  const renderForm = (
+    <div className="form">
+      <form onSubmit={handleSubmit}>
+        <div className="input-container">
+          <label>Username </label>
+          <input type="text" name="uname" required />
+          {renderErrorMessage("uname")}
+        </div>
+        <div className="input-container">
+          <label>Password </label>
+          <input type="password" name="pass" required />
+          {renderErrorMessage("pass")}
+        </div>
+        <div className="button-container">
+          <input type="submit" />
+        </div>
+      </form>
+    </div>
+  );
 
   return (
-    <>
-        <div className='container'>
-          <center><h1 style={{color:'blue'}}><i>LOGIN FORM..</i></h1></center>
-          <form>
-            <label htmlFor='un'>USERNAME</label>
-            <input type='text' id='un' className='form-control'/>
-            <br/>
-            <br/>
-            <label htmlFor='pwd'>PASSWORD</label>
-            <input type='password' id='pwd' className='form-control'/>
-            <br/>
-            <br/>
-            <center><input type='submit' value='SUBMIT' className='btn btn-outline-primary col-3 me-3'/>
-            <input type='reset' value='RESET' className='btn btn-outline-warning col-3'/></center>
-          </form>
-        </div>
-    </>
-  )
-}
+    <div className="app">
+      <div className="login-form">
+        <div className="title">Sign In</div>
+        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+        
+      </div>
+    </div>
+  );
+  }
 
-export default LogIn
+export default LogIn;
