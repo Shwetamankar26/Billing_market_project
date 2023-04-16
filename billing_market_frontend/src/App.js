@@ -9,12 +9,14 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import LogIn from './Components/LogIn';
 import AddExpenses from './Components/Auth_components/AddExpenses';
 import AddUser from './Components/Auth_components/AddUser';
+import Navbar from './Components/Auth_components/Layout/Navbar';
+import AdminDashboard from './Components/Auth_components/Dashboard/AdminDashboard';
 
 function App() {
   return (
     
     <>
-
+    <AdminDashboard/>
     <BrowserRouter>
     {/* <Sidebar> */}
     <Routes>
