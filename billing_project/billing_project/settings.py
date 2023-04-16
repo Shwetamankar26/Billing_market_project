@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,16 +45,32 @@ INSTALLED_APPS = [
     'reports_app',
     'sales_app',
     'stocks_app',
-    'faker_app',
     'rest_framework',
     'phonenumber_field',
     'corsheaders',
+    'rest_framework_simplejwt'
+    
+   
 ]
-CORS_ORIGIN_WHITELIST = (
-'http://localhost:3000',  
-'http://127.0.0.1:3000',
-)
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
+]
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS: True
 
+# SIMPLE_JWT = {
+#     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=800),
+#     'REFRESH_TOKEN_LIFETIME': timedelta(days=2),
+# }
+
+REST_FRAMEWORK={
+    'NON_FIELD_ERRORS_KEY':'error',
+     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -62,7 +81,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-   
 ]
 
 ROOT_URLCONF = 'billing_project.urls'
@@ -91,12 +109,12 @@ WSGI_APPLICATION = 'billing_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'billing_market',
-        'USER':'root',
-        'PASSWORD':'root',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3'
     }
 }
+
+
 
 
 # Password validation
@@ -141,3 +159,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "auth_app.User"
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'sandhyayadavsonu@gmail.com'
+EMAIL_HOST_PASSWORD = 'vbtnyfdpnqmahdga'

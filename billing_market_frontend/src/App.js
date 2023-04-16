@@ -1,37 +1,27 @@
-import './App.css'
+import LogIn from "./Components/LogIn";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import Daily_sales from './Components/Sales_components/Daily_sales';
-import Monthly_sales from './Components/Sales_components/Monthly_sales';
-import Quaterly_sales from './Components/Sales_components/Quaterly_sales';
-import Weeklysales from './Components/Sales_components/Weeklysales';
-
-import {BrowserRouter,Routes,Route} from 'react-router-dom'
-import Invoice from './Components/Sales_components/Invoice';
-import Sales_by_category from './Components/Sales_components/Sales_by_categeory';
-import Productlist from './Components/Sales_components/Productlist';
-import BillingComponent from './Components/Sales_components/BillingComponent/BillingComponent';
-import ShowInvoice from './Components/Sales_components/BillingComponent/ShowInvoice';
-import SalesReport from './Components/Sales_components/SalesReport';
+import AddUser from "./Components/Auth_components/AddUser";
+import Login2Trial from "./Components/Login2Trial";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Nabar from "./Components/Auth_components/Nabar";
+import Emil from "./Components/Emil";
+import UpdatePassword from "./Components/Auth_components/UpdatePassword";
 
 function App() {
   return (
+    
     <>
-    <BrowserRouter>
-    {/* sidebar commented because of some issue with rendering */}
-    {/* <Sidebar> */}
-    <Routes>
-      <Route path='/Daily_Sales' element={<Daily_sales/>}/>
-      <Route path='/Monthly_Sales' element={<Monthly_sales/>}/>
-      <Route path='/Quaterly_Sales' element={<Quaterly_sales/>}/>
-      <Route path='/Weekly_Sales' element={<Weeklysales/>}/>
-      <Route path='/Invoice' element={<Invoice/>}/>
-      <Route path='/Product_list' element={<Productlist/>}/>
-      <Route path='/billing' element={<BillingComponent/>}/>
-      <Route path='/invoice/:id' element={<ShowInvoice/>}/>
-      <Route path='/salesreport' element={<SalesReport/>}/>
-    </Routes>
-    {/* </Sidebar> */}
-    </BrowserRouter>
+   <BrowserRouter>
+     <Nabar/>
+   <Routes>
+    <Route path='/login' element={<Login2Trial/>}></Route>
+    <Route path='/auth' element={<AddUser/>}></Route>
+    <Route path='/login2' element={<LogIn/>}></Route>
+    {/* <Route path='/login2' element={<LogIn/>}></Route> */}
+    <Route path='/email' element={<Emil/>}></Route>
+    <Route path='/update/:userId' element={<UpdatePassword/>}></Route>
+   </Routes>
+   </BrowserRouter>
     </>
   );
 }

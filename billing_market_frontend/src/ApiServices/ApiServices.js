@@ -1,9 +1,10 @@
-import React from 'react'
+import axios from "axios"
 
-function ApiServices() {
-  return (
-    <div>ApiServices</div>
-  )
+const url ='http://localhost:8000'
+
+export const register_employee=(emplloyeeData)=>{
+    return axios.post(`${url}/v1/user/`,emplloyeeData)
 }
-
-export default ApiServices
+export const login=(emplloyeeData)=>{
+ return axios.post(`${url}/token/`,emplloyeeData)
+}
